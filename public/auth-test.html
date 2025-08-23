@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authentication Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .pass { background-color: #d4edda; border: 1px solid #c3e6cb; }
+        .fail { background-color: #f8d7da; border: 1px solid #f5c6cb; }
+        .info { background-color: #d1ecf1; border: 1px solid #bee5eb; }
+        button { padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Authentication Test</h1>
+    <button onclick="runTests()">Run Tests</button>
+    <div id="results"></div>
+
+    <script>
+        async function runTests() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            addResult('info', 'Starting authentication tests...');
+            
+            // Test 1: Check localStorage
+            const token = localStorage.getItem('token') || localStorage.getItem('access_token');
+            if (token) {
+                addResult('pass', `Token found: ${token.substring(0, 10)}...`);
+            } else {
+                addResult('fail', 'No token found in localStorage');
+            }
+            
+            // Test 2: Check token validity
+            if (token) {
+                try {
+                    const parts = token.split('.');
+                    const payload = JSON.parse(atob(parts[1]));
+                    const exp = payload.exp;
+                    const now = Date.now() / 1000;
+                    
+                    if (exp > now) {
+                        addResult('pass', `Token is valid. Expires: ${new Date(exp * 1000).toLocaleString()}`);
+                    } else {
+                        addResult('fail', `Token has expired. Expired: ${new Date(exp * 1000).toLocaleString()}`);
+                    }
+                } catch (e) {
+                    addResult('fail', `Invalid token format: ${e.message}`);
+                }
+            }
+            
+            // Test 3: Test backend connectivity
+            try {
+                const response = await fetch('http://localhost:8000/cors-test');
+                if (response.ok) {
+                    addResult('pass', 'Backend is reachable');
+                } else {
+                    addResult('fail', `Backend returned ${response.status}`);
+                }
+            } catch (e) {
+                addResult('fail', `Backend not reachable: ${e.message}`);
+            }
+            
+            // Test 4: Test notification endpoint
+            if (token) {
+                try {
+                    const response = await fetch('http://localhost:8000/notifications/unread-count', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        addResult('pass', `Notification API works: ${JSON.stringify(data)}`);
+                    } else {
+                        const errorText = await response.text();
+                        addResult('fail', `Notification API failed: ${response.status} - ${errorText}`);
+                    }
+                } catch (e) {
+                    addResult('fail', `Notification API error: ${e.message}`);
+                }
+            }
+            
+            // Test 5: Test profile endpoint
+            if (token) {
+                try {
+                    const response = await fetch('http://localhost:8000/profile', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        addResult('pass', `Profile API works: ${data.username}`);
+                    } else {
+                        const errorText = await response.text();
+                        addResult('fail', `Profile API failed: ${response.status} - ${errorText}`);
+                    }
+                } catch (e) {
+                    addResult('fail', `Profile API error: ${e.message}`);
+                }
+            }
+        }
+        
+        function addResult(type, message) {
+            const resultsDiv = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            resultsDiv.appendChild(div);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+.artwork-detail-page {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.08); /* transparent white */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* frame effect */
+    border-radius: 16px;
+    backdrop-filter: blur(10px); /* glass effect */
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    color: white; /* or inherit if on dark background */
+}
+
+.artwork-detail-image {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05); /* light transparent background */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* framed image */
+}
+
+.back-button {
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    padding: 15px;
+    font-style: italic;
+    font-family: 'Poppins', sans-serif;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.artist-info {
+    margin-top: 30px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: white;
+}
+
+.description-text {
+    font-family: 'Roboto Slab', serif; /* New font style for description */
+    font-size: 18px;
+    margin-bottom: 30px;            /* Creates space (new line) after description */
+    line-height: 1.5;
+    color: #eee;                    /* Adjust color if needed */
+}
+
+.artist-info {
+    font-family: 'Arial', sans-serif; /* Different font or keep existing */
+    font-size: 16px;
+    /* other existing styles */
+}

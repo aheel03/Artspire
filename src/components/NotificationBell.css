@@ -1,0 +1,194 @@
+.notification-bell-container {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-bell-container .notification-bell {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(139, 92, 246, 0.1) !important;
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 45px;
+  height: 45px;
+  user-select: none;
+  backdrop-filter: blur(20px);
+}
+
+.notification-bell-container .notification-bell:hover {
+  background: rgba(139, 92, 246, 0.2) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+}
+
+.notification-bell-container .notification-bell:active {
+  transform: translateY(0);
+}
+
+.notification-bell-container .notification-bell.active {
+  background: rgba(139, 92, 246, 0.2) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+.notification-bell-container .notification-bell.active .bell-icon {
+  color: #c084fc !important;
+}
+
+.bell-icon {
+  width: 20px;
+  height: 20px;
+  color: #a855f7 !important;
+  transition: color 0.3s ease;
+}
+
+.notification-bell-container .notification-bell:hover .bell-icon {
+  color: #c084fc !important;
+}
+
+.notification-bell-container .notification-bell.animate {
+  animation: bellRing 0.6s ease-in-out;
+}
+
+@keyframes bellRing {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(15deg); }
+  20% { transform: rotate(-10deg); }
+  30% { transform: rotate(10deg); }
+  40% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.notification-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  color: white;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  min-width: 18px;
+  text-align: center;
+  border: 2px solid rgba(15, 23, 42, 0.9);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  top: 56px;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.95) !important;
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  min-width: 360px;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.notification-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.notification-dropdown-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent !important;
+  border-radius: 16px 16px 0 0;
+}
+
+.notification-dropdown-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.mark-all-read-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.mark-all-read-btn:hover {
+  background: #e3f2fd;
+  color: #0056b3;
+}
+
+/* Add arrow pointing to the bell */
+.notification-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #e9ecef;
+}
+
+.notification-dropdown::after {
+  content: '';
+  position: absolute;
+  top: -7px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .notification-dropdown {
+    right: -20px;
+    left: -20px;
+    width: auto;
+    min-width: 320px;
+  }
+  
+  .notification-dropdown::before,
+  .notification-dropdown::after {
+    right: 40px;
+  }
+}
