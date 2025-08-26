@@ -38,11 +38,11 @@ app.add_middleware(
 )
 print("[INFO] CORS middleware added.")
 
-# --- Supabase config (updated with actual credentials) ---
-SUPABASE_URL = "https://tpjxvkbapxwczorzmxtn.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwanh2a2JhcHh3Y3pvcnpteHRuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTY0Mjg5MiwiZXhwIjoyMDY3MjE4ODkyfQ.06efOCgaERB8PBt-W7xdOHxAk31auBf96gHXXwJ3C3I"
-SUPABASE_BUCKET = "artwork"
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+# --- Supabase config (using environment variables) ---
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET", "artwork")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY) if SUPABASE_URL and SUPABASE_KEY else None
 
 
 
